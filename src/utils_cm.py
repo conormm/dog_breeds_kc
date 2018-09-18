@@ -59,3 +59,28 @@ def copy_images_to_new(lab_img, from_dir, to_dir):
 def lazy_list_files(path):
     f = iter(os.listdir(path))
     return f
+
+class ModelParameters:
+    
+    @staticmethod
+    def get_trainable(params):
+        return (p for p in params if p.requires_grad)
+        
+    @staticmethod    
+    def get_frozen(params):
+        return (p for p in params if not p.requires_grad)
+    
+    @staticmethod
+    def freeze_all(params):
+        for p in params:
+            p.requires_grad = False
+    
+    @staticmethod
+    def all_trainable(params):
+        return all(p.requires_grad for p in params)
+    
+    @staticmethod
+    def all_frozen(params):
+        return all(not p.requires_grad for p in params)
+
+
